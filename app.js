@@ -30,8 +30,14 @@ app.use(require('express-session')({
     store: require('mongoose-session')(mongoose)
 }));
 app.use(function(req, res, next){
-res.locals.user = req.session.user;
-next();
+  res.locals.user = req.session.user;
+  var err = req.session.error;
+  delete req.session.error;
+  res.locals.message = '';
+  if (err) {
+    res.locals.message = '<div class="alert alert-error">' + err + '</div>';
+  }
+  next();
 });
 
 app.use('/', index);

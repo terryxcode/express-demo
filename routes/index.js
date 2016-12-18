@@ -19,7 +19,7 @@ router.post('/login', function(req, res) {
     req.session.user = user;
     res.redirect('/home');
   }
-
+  req.session.error = 'username or password incorrect';
   res.redirect('/login');
 });
 
