@@ -6,4 +6,33 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/login', function(req, res) {
+  res.render('login', { title: 'Sign in'});
+});
+
+router.post('/login', function(req, res) {
+  var user = {
+    username: 'admin',
+    password: 'admin'
+  }
+  if (req.body.username === user.username && req.body.password===user.password) {
+    res.redirect('/home');
+  }
+
+  res.redirect('/login');
+});
+
+router.get('/logout', function(req, res) {
+  res.redirect('/');
+});
+
+router.get('/home', function(req, res) {
+  var user = {
+    username: 'admin',
+    password: 'admin'
+  }
+
+  res.render('home', { title: 'Home', user: user });
+});
+
 module.exports = router;
