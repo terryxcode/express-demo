@@ -16,6 +16,7 @@ router.post('/login', function(req, res) {
     password: 'admin'
   }
   if (req.body.username === user.username && req.body.password===user.password) {
+    req.session.user = user;
     res.redirect('/home');
   }
 
@@ -23,16 +24,12 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
+  req.session.user = null;
   res.redirect('/');
 });
 
 router.get('/home', function(req, res) {
-  var user = {
-    username: 'admin',
-    password: 'admin'
-  }
-
-  res.render('home', { title: 'Home', user: user });
+  res.render('home', { title: 'Home' });
 });
 
 module.exports = router;

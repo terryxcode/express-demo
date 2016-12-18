@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/session');
+
 var app = express();
 
 // view engine setup
@@ -21,6 +24,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({
+    key: 'session',
+    secret: 'SUPER SECRET SECRET',
+    store: require('mongoose-session')(mongoose)
+}));
+app.use(function(req, res, next){
+res.locals.user = req.session.user;
+next();
+});
 
 app.use('/', index);
 app.use('/users', users);
