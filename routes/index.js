@@ -20,9 +20,10 @@ router.post('/login', function (req, res) {
   if (req.body.username === user.username && req.body.password === user.password) {
     req.session.user = user;
     res.redirect('/home');
+  } else {
+    req.session.error = 'username or password incorrect';
+    res.redirect('/login');
   }
-  req.session.error = 'username or password incorrect';
-  res.redirect('/login');
 });
 
 router.get('/logout', auth);
