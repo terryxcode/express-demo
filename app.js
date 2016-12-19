@@ -43,7 +43,7 @@ app.use(function (req, res, next) {
   delete req.session.error;
   res.locals.message = '';
   if (err) {
-    res.locals.message = '<div class="alert alert-error">' + err + '</div>';
+    res.locals.message = '<div class="alert alert-warning">' + err + '</div>';
   }
   next();
 });
